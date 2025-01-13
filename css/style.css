@@ -15,7 +15,7 @@ body {
 .buttons {
   display: flex;  
   padding: 80px;
-  font-size: 100px;
+  font-size: 200px;
   justify-content: space-evenly;
   
 }
@@ -23,10 +23,14 @@ body {
 
 
 .tile {
+    
     height: 100px;
-    background: black;
-    border: 5px solid blue;
-    cursor: pointer;
+    font-size: 50px;
+    color: white;
+    background: grey;
+    border: 5px solid gray;
+    
+   
 }
 
 .easy-tiles {
@@ -49,4 +53,25 @@ body {
     display: grid;
     grid-template-columns: repeat(16,100px);
     gap: 16px;
+}
+
+.button {
+    display: flex;  
+    padding: 1px;
+    font-size: 50px;
+    justify-content: space-evenly;
+}
+
+
+
+.montserrat {
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+#main {
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }

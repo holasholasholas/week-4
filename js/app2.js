@@ -1,4 +1,7 @@
-let selectDiffculty;
+let hasFlippedCard = false;
+let firstCard, secondCard;
+let tileCount = 0;
+let timeOut = false;
 
 
 
@@ -9,33 +12,128 @@ const tilesContainerHard = document.querySelector(".hard-tiles")
 
 
 function createEasyTile(){
-    const element = document.createElement("div");
-    const randomId = Math.floor(Math.random() * 10);
-    element.classList.add("tile");
-    element.setAttribute("serial", randomId);
-    tilesContainerEasy.appendChild(element)
     
-}
+    const element = document.createElement("div");
+    element.classList.add("tile");
+    element.setAttribute("data-number", serialArrayEasy.pop());
+    element.textContent = element.getAttribute("data-number")
+    tilesContainerEasy.appendChild(element)
+    element.addEventListener("click", flipCard)
+
+
+    function flipCard(){
+        
+        if(timeOut) return;
+        
+        if(!hasFlippedCard){
+            hasFlippedCard = true;
+            firstCard = this;
+            this.textContent = element.getAttribute("data-number")
+            console.log(firstCard, {hasFlippedCard})
+        
+            
+            
+        } else {
+            hasFlippedCard = false;
+            secondCard = this;
+            this.textContent = element.getAttribute("data-number")
+            console.log({firstCard, secondCard});
+            console.log(secondCard, {hasFlippedCard});
+            
+            
+        };
+
+        if (firstCard.textContent === secondCard.textContent){
+            firstCard.textContent = secondCard.textContent;
+            firstCard.removeEventListener("click", flipCard);
+            secondCard.removeEventListener("click", flipCard);
+            console.log("it matches!");
+        }
+         
+            else {
+                
+                timeOut = true;
+                setTimeout(() => {
+                    secondCard.textContent = null;
+                    firstCard.textContent = null;
+                    timeOut = false;
+                    
+
+                },2000);
+                
+            };  
+    
+        }; 
+        
+
+setTimeout(() => {
+    element.textContent = null;
+}, 2000);
+            
+
+};
+            
+        // } else{
+        //     timeOut = true;
+        //     setTimeout(() => {
+        //         firstCard.textContent = null;
+        //         secondCard.textContent = null;
+        //         timeOut = false;
+        //     }, 1000);
+            
+            
+
+        
+        //     if(firstCard.dataset.number != secondCard.dataset.number){
+        //     setTimeout(() => {
+        //         firstCard.textContent = null;
+        //         secondCard.textContent = null; 
+                  
+        //     }, 1000);}
+             
+        //     if(firstCard.dataset.number === secondCard.dataset.number){
+        //         firstCard.textContent;
+        //         secondCard.textContent;
+                
+        //     }
+
+     
+
+    
+   
+    
+function revealCards(){
+    
+}        
+        
+    
+        
+    
+
+    
+    
+
+
+
 function createMediumTile(){
     const element = document.createElement("div");
-    const randomId = Math.random();
     element.classList.add("tile");
-    element.setAttribute("serial", randomId);
     tilesContainerMedium.appendChild(element)
     
 }
 function createHardTile(){
     const element = document.createElement("div");
-    const randomId = Math.random();
     element.classList.add("tile");
-    element.setAttribute("serial", randomId);
     tilesContainerHard.appendChild(element)
     
 }
 function easyTiles(){
+        
         clearCache();
     for(let i=0; i < 16; i++){
         createEasyTile()
+       
+
     }
 }
 function mediumTiles(){
@@ -68,9 +166,22 @@ function init(){
     
 }
 
+// fisher-yates algorithm
+
+function shuffle(array) {
+    for (let i = array.length -1; i >= 0; i--){
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+
 init()
 
-// document.getElementsByClassName("tile").addEventListener("click",revealTile())
+
+//generate serial numbers
 
 const serialArray = [];
 let assignId = 0;
@@ -80,4 +191,22 @@ for (let i=0; i < 8; i++){
     serialArray.push(assignId)
 }
 const serialArrayEasy =[...serialArray, ...serialArray];
-console.log(serialArrayEasy);
+
+shuffle(serialArrayEasy);
+
+
+
+
+
+/* 
+
+addeventlistener 
+
+conditions to match tiles
+reveal counter  
+flip mechanics 
+
+condition to win game 
+
+
+*/
